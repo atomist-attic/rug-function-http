@@ -1,0 +1,37 @@
+---
+kind: "operation"
+client: "rug-cli 0.19.1"
+editor:
+  name: "EnableTravisForRugArchiveTS"
+  group: "atomist-rugs"
+  artifact: "travis-editors"
+  version: "0.7.0"
+  origin:
+    repo: "atomist-rugs/travis-editors.git"
+    branch: "d4472b2bb05c009fa7e4c6657654623a5af70c23"
+    sha: "d4472b2"
+  parameters:
+    - "repo_slug": "atomist-rugs/lein-editors"
+    - "org": ".org"
+    - "github_token": "4**************************************b"
+    - "maven_base_url": "https://atomist.jfrog.io/atomist"
+    - "maven_user": "t************h"
+    - "maven_token": "A***********************************************************************i"
+
+---
+kind: "operation"
+client: "atomist 1.2"
+generator:
+  name: "SimpleLeinClojureProject"
+  group: "atomist-rugs"
+  artifact: "lein-editors"
+  version: "1.3.1"
+  origin:
+    repo: "https://github.com/atomist-rugs/lein-editors.git"
+    branch: "d8b2ee4916e3c740e01d2865cfd3f48f3009d436"
+    sha: "d8b2ee4*"
+  parameters:
+    - "project_description": "HTTP Rug Function"
+    - "project_name": "rug-function-http"
+    - "package_name": "com.atomist.rug.functions"
+
