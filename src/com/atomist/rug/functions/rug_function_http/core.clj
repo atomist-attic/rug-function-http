@@ -4,11 +4,13 @@
     :init init
     :constructors {[] []}
     :implements [com.atomist.rug.spi.RugFunction])
-  (:require [clj-http.client :as client])
+  (:require [clj-http.client :as client]
+            [clojure.data.json :as json])
   (:import (com.atomist.param ParameterValues Parameter)
            (scala.collection Seq JavaConversions)
            (com.atomist.rug.spi Handlers$Response Handlers$ Handlers$Status$Success$)
-           (scala None Option Some)))
+           (scala None Option Some)
+           (com.atomist.rug.runtime InstructionResponse)))
 
 ;
 ; HTTP Rug Function
@@ -25,6 +27,15 @@
   [coll]
   (JavaConversions/mapAsJavaMap coll))
 
+(defn response-body
+  "Create a complicated response body"
+  [response]
+  (let [bound (reify InstructionResponse
+                 (status [_] )
+                 (code [_] (:status response))
+                 (body [_] (:body response)))]
+    (Some. bound)))
+
 (defn -init
   []
   [[] nil])
@@ -33,7 +44,7 @@
   "For now, just extract url and use GET"
   [this ^ParameterValues params]
   (let [results (client/get (-> params (.parameterValueMap) (javarize) (get "url") (.getValue)))]
-    (Handlers$Response. Handlers$Status$Success$/MODULE$, nil, nil, (Some. results))))
+    (Handlers$Response. Handlers$Status$Success$/MODULE$, nil, nil, (response-body results))))
 
 (defn -name
   [this]
