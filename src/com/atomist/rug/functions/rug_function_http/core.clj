@@ -30,11 +30,8 @@
 (defn response-body
   "Create a complicated response body"
   [response]
-  (let [bound (reify InstructionResponse
-                 (status [_] )
-                 (code [_] (:status response))
-                 (body [_] (:body response)))]
-    (Some. bound)))
+  (Some.
+    (InstructionResponse. nil, (:status response) (:body response))))
 
 (defn -init
   []
