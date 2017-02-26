@@ -69,7 +69,8 @@
            :get (client/get url config)
            :post (client/post url config)
            :put (client/put url config)
-           :head (client/post url config))
+           :head (client/post url config)
+           :delete (client/delete url config))
       (response-body)
       (Handlers$Response. Handlers$Status$Success$/MODULE$, nil, nil))))
 
@@ -101,7 +102,7 @@
      (->
        (Parameter. "method")
        (.setPattern "^get|put|post|head$")
-       (.describedAs "The HTTP method to use. One of get|put|post|head"))
+       (.describedAs "The HTTP method to use. One of get|put|post|head|delete"))
 
      (->
        (Parameter. "config")
