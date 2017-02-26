@@ -37,11 +37,41 @@
   []
   [[] nil])
 
+(defn ?assoc
+  "Same as assoc, but skip the assoc if v is nil, and keywordize key"
+  [params nice-map str-key]
+  (let [val (some->
+              params
+              (.parameterValueMap)
+              (javarize)
+              (get str-key)
+              (.getValue))]
+    (if val
+      (assoc nice-map (keyword str-key) val)
+      nice-map)))
+
+(defn parse-params
+  "Extract make them nicer to access"
+  [^ParameterValues params]
+  (reduce #(?assoc params %1 %2) {} ["url" "method" "config"]))
+
+
 (defn -run
-  "For now, just extract url and use GET"
+  "Dispatch HTTP requrest and return a HandlerResponse"
   [this ^ParameterValues params]
-  (let [results (client/get (-> params (.parameterValueMap) (javarize) (get "url") (.getValue)))]
-    (Handlers$Response. Handlers$Status$Success$/MODULE$, nil, nil, (response-body results))))
+
+  (let [parsed-params (parse-params params)
+        url           (:url parsed-params)
+        config        (json/read-str (get parsed-params "config" "{}"))]
+
+    (->>
+      (case (:method parsed-params)
+           :get (client/get url config)
+           :post (client/post url config)
+           :put (client/put url config)
+           :head (client/post url config))
+      (response-body)
+      (Handlers$Response. Handlers$Status$Success$/MODULE$, nil, nil))))
 
 (defn -name
   [this]
@@ -49,7 +79,7 @@
 
 (defn- tags
   [this]
-  (scalarize ["http" "rug" "function" "clojure"]))
+  (scalarize ["http" "rug" "function" "clojure" "clj-http"]))
 
 (defn -description
   [this]
@@ -72,8 +102,9 @@
        (Parameter. "method")
        (.setPattern "^get|put|post|head$")
        (.describedAs "The HTTP method to use. One of get|put|post|head"))
+
      (->
        (Parameter. "config")
-       (.setPattern "@any")
+       (.setPattern "^@any")
        (.setRequired false)
-       (.describedAs "Config for the HTTP client as per: https://github.com/dakrone/clj-http"))]))
+       (.describedAs "JSON string that represents everything we send to clj-http"))]))
