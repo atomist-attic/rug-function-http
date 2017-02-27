@@ -8,9 +8,8 @@
             [clojure.data.json :as json])
   (:import (com.atomist.param ParameterValues Parameter)
            (scala.collection Seq JavaConversions)
-           (com.atomist.rug.spi Handlers$Response Handlers$ Handlers$Status$Success$)
-           (scala None Option Some)
-           (com.atomist.rug.runtime InstructionResponse)))
+           (com.atomist.rug.spi Handlers$Response Handlers$ Handlers$Status$Success$ Handlers$Status$Failure$)
+           (scala Option Some)))
 
 ;
 ; HTTP Rug Function
@@ -27,52 +26,44 @@
   [coll]
   (JavaConversions/mapAsJavaMap coll))
 
+(def success #{200 201 202 203 204 205 206 207 300 301 302 303 307})
+
 (defn response-body
   "Create a complicated response body"
   [response]
-  (Some.
-    (InstructionResponse. nil, (:status response) (:body response))))
+  (Handlers$Response.
+    (if (contains? success (:status response))
+      Handlers$Status$Success$/MODULE$
+      Handlers$Status$Failure$/MODULE$)
+    (Some/apply nil)
+    (Some. (:status response))
+    (Some. (:body response))))
 
 (defn -init
   []
   [[] nil])
 
-(defn ?assoc
-  "Same as assoc, but skip the assoc if v is nil, and keywordize key"
-  [params nice-map str-key]
-  (let [val (some->
-              params
-              (.parameterValueMap)
-              (javarize)
-              (get str-key)
-              (.getValue))]
-    (if val
-      (assoc nice-map (keyword str-key) val)
-      nice-map)))
-
-(defn parse-params
-  "Extract make them nicer to access"
-  [^ParameterValues params]
-  (reduce #(?assoc params %1 %2) {} ["url" "method" "config"]))
-
+(defn get-value
+  "Extract a value from the parameters by name"
+  [params str-key & default]
+  (if-let [val (some->
+                 params
+                 (.parameterValueMap)
+                 (javarize)
+                 (get str-key)
+                 (.getValue))]
+    val
+    (first default)))
 
 (defn -run
   "Dispatch HTTP requrest and return a HandlerResponse"
   [this ^ParameterValues params]
-
-  (let [parsed-params (parse-params params)
-        url           (:url parsed-params)
-        config        (json/read-str (get parsed-params "config" "{}"))]
-
-    (->>
-      (case (:method parsed-params)
-           :get (client/get url config)
-           :post (client/post url config)
-           :put (client/put url config)
-           :head (client/post url config)
-           :delete (client/delete url config))
-      (response-body)
-      (Handlers$Response. Handlers$Status$Success$/MODULE$, nil, nil))))
+  (->
+    (apply
+      (resolve (symbol (str "clj-http.client/" (get-value params "method"))))
+      [(get-value params "url")
+       (-> params (get-value "config" "{}") (json/read-str) (assoc :throw-exceptions false))])
+    (response-body)))
 
 (defn -name
   [this]
@@ -101,7 +92,7 @@
        (.describedAs "The HTTP URL to call"))
      (->
        (Parameter. "method")
-       (.setPattern "^get|put|post|head$")
+       (.setPattern "^get|put|post|head|delete$")
        (.describedAs "The HTTP method to use. One of get|put|post|head|delete"))
 
      (->
