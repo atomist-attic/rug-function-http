@@ -8,7 +8,7 @@
             [clojure.data.json :as json])
   (:import (com.atomist.param ParameterValues Parameter)
            (scala.collection Seq JavaConversions)
-           (com.atomist.rug.spi Handlers$Response Handlers$ Handlers$Status$Success$ Handlers$Status$Failure$)
+           (com.atomist.rug.spi Handlers$ Handlers$Status$Success$ Handlers$Status$Failure$ StringBodyOption FunctionResponse)
            (scala Option Some)))
 
 ;
@@ -31,13 +31,13 @@
 (defn response-body
   "Create a complicated response body"
   [response]
-  (Handlers$Response.
+  (FunctionResponse.
     (if (contains? success (:status response))
       Handlers$Status$Success$/MODULE$
       Handlers$Status$Failure$/MODULE$)
     (Some/apply nil)
     (Some. (:status response))
-    (Some. (:body response))))
+    (StringBodyOption/apply(:body response))))
 
 (defn -init
   []

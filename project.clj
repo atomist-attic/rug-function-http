@@ -1,7 +1,7 @@
-(defproject com.atomist.rug/rug-function-http "0.0.2-SNAPSHOT"
+(defproject com.atomist.rug/rug-function-http "0.1.0-SNAPSHOT"
   :description "HTTP Rug Function"
   :dependencies [[org.clojure/clojure "1.8.0"]
-                 [com.atomist/rug "0.13.0-SNAPSHOT" :scope "provided"]
+                 [com.atomist/rug "[0.13.0-20170303115210,0.13.1)" :scope "provided"]
                  [org.clojure/data.json "0.2.6"]
                  [clj-http "3.4.1"]]
   :profiles {:dev {:dependencies [[midje "1.8.3"]]
@@ -11,9 +11,13 @@
                              [lein-ancient "0.6.10" :exclusions [org.clojure/clojure]]]}}
   :aot [com.atomist.rug.functions.rug-function-http.core]
   :javac-options     ["-target" "1.8" "-source" "1.8"]
-  :repositories [["public-atomist-release" {:url      "https://atomist.jfrog.io/atomist/libs-release"}]
+  :repositories [["public-atomist-dev" {:url "https://atomist.jfrog.io/atomist/libs-dev"
+                                        :snapshots false
+                                        :releases {:checksum :fail :update :always}}]
+                 ["public-atomist-release" {:url      "https://atomist.jfrog.io/atomist/libs-release"
+                                            :snapshots false}]
                  ["releases" {:url      "https://atomist.jfrog.io/atomist/libs-release-local"
                               :sign-releases false
+                              :snapshots false
                               :username [:gpg :env/artifactory_user]
-                              :password [:gpg :env/artifactory_pwd]}]
-                 ["atomist-public" {:url "https://atomist.jfrog.io/atomist/libs-release"}]])
+                              :password [:gpg :env/artifactory_pwd]}]])
