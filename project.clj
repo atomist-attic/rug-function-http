@@ -1,7 +1,7 @@
-(defproject com.atomist.rug/rug-function-http "0.1.0-SNAPSHOT"
+(defproject com.atomist.rug/rug-function-http "0.2.0"
   :description "HTTP Rug Function"
   :dependencies [[org.clojure/clojure "1.8.0"]
-                 [com.atomist/rug "[0.13.0-20170303115210,0.13.1)" :scope "provided"]
+                 [com.atomist/rug "0.17.1" :scope "provided"]
                  [org.clojure/data.json "0.2.6"]
                  [clj-http "3.4.1"]]
   :profiles {:dev {:dependencies [[midje "1.8.3"]]
@@ -19,5 +19,5 @@
                  ["releases" {:url      "https://atomist.jfrog.io/atomist/libs-release-local"
                               :sign-releases false
                               :snapshots false
-                              :username [:gpg :env/artifactory_user]
-                              :password [:gpg :env/artifactory_pwd]}]])
+                              :username [:gpg :env/atomist_repo_user]
+                              :password [:gpg :env/atomist_repo_pwd]}]])
