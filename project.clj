@@ -1,4 +1,4 @@
-(defproject com.atomist.rug/rug-function-http "0.4.0"
+(defproject com.atomist.rug/rug-function-http "0.5.0-SNAPSHOT"
   :description "HTTP Rug Function"
   :dependencies [[org.clojure/clojure "1.8.0"]
                  [com.atomist/rug "0.25.1" :scope "provided"]
