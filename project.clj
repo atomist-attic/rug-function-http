@@ -1,7 +1,7 @@
-(defproject com.atomist.rug/rug-function-http "0.3.0-SNAPSHOT"
+(defproject com.atomist.rug/rug-function-http "0.4.0"
   :description "HTTP Rug Function"
   :dependencies [[org.clojure/clojure "1.8.0"]
-                 [com.atomist/rug "0.17.1" :scope "provided"]
+                 [com.atomist/rug "0.25.1" :scope "provided"]
                  [org.clojure/data.json "0.2.6"]
                  [clj-http "3.4.1"]]
   :profiles {:dev {:dependencies [[midje "1.8.3"]]
