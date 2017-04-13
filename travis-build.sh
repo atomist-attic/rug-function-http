@@ -28,11 +28,11 @@ function main() {
         fi
     fi
 
-    if !lein set-version $project_version :no-snapshot true; then
+    if ! lein set-version $project_version :no-snapshot true; then
         err "Unable to set version in project.clj"
         return 1
     fi
-    if !lein do clean, midje, jar; then
+    if ! lein do clean, midje, jar; then
         err "Lein midje, jar failed"
         return 1
     fi
