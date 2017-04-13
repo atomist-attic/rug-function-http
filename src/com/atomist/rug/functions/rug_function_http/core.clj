@@ -62,7 +62,7 @@
     (apply
       (resolve (symbol (str "clj-http.client/" (.toLowerCase (get-value params "method")))))
       [(get-value params "url")
-       (-> params (get-value "config" "{}") (json/read-str) (assoc :throw-exceptions false))])
+       (-> params (get-value "config" "{}") (json/read-str :key-fn keyword) (assoc :throw-exceptions false))])
     (response-body)))
 
 (defn -name
