@@ -18,7 +18,8 @@
                  ["public-atomist-release" {:url      "https://atomist.jfrog.io/atomist/libs-release"
                                             :snapshots false}]
                  ["releases" {:url      "https://atomist.jfrog.io/atomist/libs-release-local"
-                              :sign-releases false
+                              :sign-releases true
+                              :signing {:gpg-key "DA85ED8F"}
                               :snapshots false
                               :username [:gpg :env/atomist_repo_user]
                               :password [:gpg :env/atomist_repo_pwd]}]])

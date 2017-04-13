@@ -60,7 +60,7 @@
   [this ^ParameterValues params]
   (->
     (apply
-      (resolve (symbol (str "clj-http.client/" (get-value params "method"))))
+      (resolve (symbol (str "clj-http.client/" (.toLowerCase (get-value params "method")))))
       [(get-value params "url")
        (-> params (get-value "config" "{}") (json/read-str) (assoc :throw-exceptions false))])
     (response-body)))

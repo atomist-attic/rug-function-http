@@ -21,19 +21,17 @@ function main() {
     if [[ $TRAVIS_TAG =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
         project_version="$TRAVIS_TAG"
     else
-        if ! $mvn build-helper:parse-version versions:set -DnewVersion=\${parsedVersion.majorVersion}.\${parsedVersion.minorVersion}.\${parsedVersion.incrementalVersion}-\${timestamp} versions:commit
-        then
-            err "failed to set timestamped project version"
+        project_version=$(head -n 1 project.clj | cut -d ' ' -f3 | cut -d '"' -f2 | cut -d '-' -f1)-$(date -u '+%Y%m%d%H%M%S')
+        if [[ $? != 0 || ! $project_version ]]; then
+            err "failed to parse project version"
             return 1
         fi
-        project_version=$(head -n 1 project.clj | cut -d ' ' -f3 | cut -d '"' -f2 | cut -d '-' -f1)-$(date -u '+%Y%m%d%H%M%S')
     fi
 
-     if [[ $? != 0 || ! $project_version ]]; then
-        err "failed to parse project version"
+    if !lein set-version $project_version :no-snapshot true; then
+        err "Unable to set version in project.clj"
         return 1
-     fi
-
+    fi
     if !lein do clean, midje, jar; then
         err "Lein midje, jar failed"
         return 1
