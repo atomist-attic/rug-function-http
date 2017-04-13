@@ -1,5 +1,7 @@
 # rug-function-http
 
+[![Build Status](https://travis-ci.org/atomist/rug-function-http.svg?branch=master)](https://travis-ci.org/atomist/rug-function-http)
+
 HTTP Rug Function based on https://github.com/dakrone/clj-http
 
 ## Parameters
