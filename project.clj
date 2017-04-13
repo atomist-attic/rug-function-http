@@ -8,6 +8,7 @@
                    :plugins [[lein-midje "3.1.3"]
                              [jonase/eastwood "0.2.1"]
                              [lein-cloverage "1.0.6"]
+                             [lein-set-version "0.4.1"]
                              [lein-ancient "0.6.10" :exclusions [org.clojure/clojure]]]}}
   :aot [com.atomist.rug.functions.rug-function-http.core]
   :javac-options     ["-target" "1.8" "-source" "1.8"]
