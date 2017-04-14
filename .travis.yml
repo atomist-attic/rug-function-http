@@ -27,3 +27,11 @@ addons:
     packages:
     - openssl
     - gnupg
+deploy:
+  provider: releases
+  api_key:
+    secure: u9dLx6tEVbEvz4HTCSLokps/h1UiTb15pBdz8PxZt+SHhutnBo9rPwWNtHt5gQ2nljorU99UlXNcnzTy9n2faBS3ZfaBaMhhURTyzrYyg4cvjvNTe41+r+P5a4GR71GQFjivdjj1jCu0qzPz/INO9E+ZovJ7nNXa+0iTrVDvGR33HkxHOe0DHGH5ru3XTe8NQMHBQe0AXPyXQ7nilB6h+6+76gf+faENDQx1KZ6P8r15e75WtJwofaT8DZZ+Ey9Q4pOobK3eWUID5mKuYDweOHSYW6q559twqj75ZdCQIowm/usCg9RINM/MZze0aM47ntHUBjaLpLw+0eOqP2dBaqMIN/oVzZtKOOb1ABu9kafDf6YSE3kcCbtu7ocDPl6b0JeUy1YKNecKeSOJTxN49Kbj2JMIfC+7pvs/lp25UERXga21nb2+p6d6ih5OIBFz8WpXhWoPUIMW5Stf6emNCbo3Xdyp0wYGssDtJw0fTeHZ15mbGw/cKfgGW3wssGgAEysm/M9RNDfCUKmLN22H3r1YQgy6eP0uKiXxU98RSaM0b7AIjfVpmqeekthFZUFXsOW0GP/CPM8doZrXVlhs7xKztzxhyDFNmjMgTDL4CtKtsa0UPlj6894U+7MFm7oWfxtZIuO5YHb15czT1J44303YkdHt6BA+AcBGCbIXPY8=
+  on:
+      tags: true
+      condition: $TRAVIS_TAG =~ ^[0-9]+\.[0-9]+\.[0-9]+$
+
