@@ -1,6 +1,5 @@
 language: clojure
-install: sudo rm -rf ~/.lein; mkdir lein; wget -O lein/lein https://raw.githubusercontent.com/technomancy/leiningen/stable/bin/lein;
-  chmod a+x lein/lein; lein/lein version; export PATH=$PATH:./lein/
+install: bash -c "curl -fsSLo boot https://github.com/boot-clj/boot-bin/releases/download/latest/boot.sh && chmod 755 boot && PATH=$PATH:."
 script: ./travis-build.sh
 jdk:
 - oraclejdk8

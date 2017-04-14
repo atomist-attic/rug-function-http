@@ -1,5 +1,5 @@
 #!/bin/bash
-# build, test, and publish lein projects on Travis CI
+# build, test, and publish boot projects on Travis CI
 
 set -o pipefail
 
@@ -21,21 +21,13 @@ function main() {
     if [[ $TRAVIS_TAG =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
         project_version="$TRAVIS_TAG"
     else
-        project_version=$(head -n 1 project.clj | cut -d ' ' -f3 | cut -d '"' -f2 | cut -d '-' -f1)-$(date -u '+%Y%m%d%H%M%S')
+        project_version=$(boot print-version | cut -d '-' -f1)-$(date -u '+%Y%m%d%H%M%S')
         if [[ $? != 0 || ! $project_version ]]; then
             err "failed to parse project version"
             return 1
         fi
     fi
-
-    if ! lein set-version $project_version :no-snapshot true; then
-        err "Unable to set version in project.clj"
-        return 1
-    fi
-    if ! lein do clean, midje, jar; then
-        err "Lein midje, jar failed"
-        return 1
-    fi
+    msg "Project version: $project_version"
 
     if [[ $TRAVIS_PULL_REQUEST != false ]]; then
         msg "not publishing or tagging pull request"
@@ -50,8 +42,13 @@ function main() {
            return 1
         fi
 
-        if ! lein deploy; then
-            err "maven deploy failed"
+        local deploy_args
+        if [[ $project_version =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            deploy_args="-r release"
+        fi
+
+        if ! boot deploy -v $project_version $deploy_args; then
+            err "boot deploy failed"
             return 1
         fi
 
