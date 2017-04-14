@@ -14,6 +14,21 @@ function err() {
     msg "$*" 1>&2
 }
 
+function install(){
+    if ! wget https://github.com/boot-clj/boot-bin/releases/download/latest/boot.sh -O boot; then
+        err "unable to download boot install script"
+        return 1
+    fi
+    if ! chmod 766 ./boot; then
+        err "unable to chmod boot"
+        return 1
+    fi
+    if ! ./boot -u; then
+        err "unable to update to latest boot"
+        return 1
+    fi
+}
+
 function main() {
     msg "branch is ${TRAVIS_BRANCH}"
 
@@ -21,7 +36,7 @@ function main() {
     if [[ $TRAVIS_TAG =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
         project_version="$TRAVIS_TAG"
     else
-        project_version=$(./boot print-version | cut -d '-' -f1)-$(date -u '+%Y%m%d%H%M%S')
+        project_version=$(./boot -q print-version | cut -d '-' -f1)-$(date -u '+%Y%m%d%H%M%S')
         if [[ $? != 0 || ! $project_version ]]; then
             err "failed to parse project version"
             return 1
@@ -74,5 +89,6 @@ function main() {
     fi
 }
 
+install "$@" || exit 1
 main "$@" || exit 1
 exit 0

@@ -1,5 +1,5 @@
 language: clojure
-install: bash -c "curl -fsSLo boot https://github.com/boot-clj/boot-bin/releases/download/latest/boot.sh && chmod 755 boot && PATH=$PATH:."
+install: true
 script: ./travis-build.sh
 jdk:
 - oraclejdk8
