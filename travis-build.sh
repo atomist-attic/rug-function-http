@@ -3,7 +3,7 @@
 
 set -o pipefail
 
-declare Pkg=travis-build-lein
+declare Pkg=travis-build-boot
 declare Version=0.1.0
 
 function msg() {
@@ -29,6 +29,8 @@ function main() {
     fi
     msg "Project version: $project_version"
 
+    ./boot build -v $project_version
+
     if [[ $TRAVIS_PULL_REQUEST != false ]]; then
         msg "not publishing or tagging pull request"
         return 0
@@ -47,7 +49,7 @@ function main() {
             deploy_args="-r release"
         fi
 
-        if ! boot deploy -v $project_version $deploy_args; then
+        if ! ./boot deploy -v $project_version $deploy_args; then
             err "boot deploy failed"
             return 1
         fi
