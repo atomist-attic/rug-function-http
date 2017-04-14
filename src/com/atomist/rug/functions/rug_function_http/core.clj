@@ -5,7 +5,9 @@
     :constructors {[] []}
     :implements [com.atomist.rug.spi.RugFunction])
   (:require [clj-http.client :as client]
-            [clojure.data.json :as json])
+            [clojure.data.json :as json]
+            [com.atomist.rug.functions.rug-function-http.whitelist :as whitelist]
+            [clojure.string :as str])
   (:import (com.atomist.param ParameterValues Parameter)
            (scala.collection Seq JavaConversions)
            (com.atomist.rug.spi Handlers$ Handlers$Status$Success$ Handlers$Status$Failure$ StringBodyOption FunctionResponse)
@@ -68,6 +70,8 @@
 (defn run
   "Clean version of -run"
   [method url config]
+  (when-not (whitelist/allowed? url)
+    (throw (RuntimeException. (str url " is not in the whitelist -> \n\t" (str/join ",\n\t" (whitelist/allowed-patterns))))))
   (apply
     (resolve (symbol (str "clj-http.client/" (validate-method method))))
     [url

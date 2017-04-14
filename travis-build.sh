@@ -44,7 +44,7 @@ function main() {
     fi
     msg "Project version: $project_version"
 
-    ./boot build -v $project_version
+    ./boot midje
 
     if [[ $TRAVIS_PULL_REQUEST != false ]]; then
         msg "not publishing or tagging pull request"
