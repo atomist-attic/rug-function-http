@@ -21,7 +21,7 @@ function main() {
     if [[ $TRAVIS_TAG =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
         project_version="$TRAVIS_TAG"
     else
-        project_version=$(boot print-version | cut -d '-' -f1)-$(date -u '+%Y%m%d%H%M%S')
+        project_version=$(./boot print-version | cut -d '-' -f1)-$(date -u '+%Y%m%d%H%M%S')
         if [[ $? != 0 || ! $project_version ]]; then
             err "failed to parse project version"
             return 1
