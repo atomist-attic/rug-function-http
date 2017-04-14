@@ -11,7 +11,7 @@
                  ["timestamp" {:url      "https://atomist.jfrog.io/atomist/libs-dev-local"
                               :username (System/getenv "ATOMIST_REPO_USER")
                               :password (System/getenv "ATOMIST_REPO_PWD")}]]
-  :version "0.5.0-SNAPSHOT"
+  :version "0.5.1"
   :repo "timestamp")
 
 (task-options!
