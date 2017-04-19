@@ -23,7 +23,7 @@ Currently we employ strict URL whitelisting to _all_ requests. Below is the curr
    :yahoo          {:patterns #{#"^http://query\.yahooapis\.com/.*$"}}
    :lebowski       {:patterns #{#"^http://lebowski\.me/.*$"}}
    :xkcd           {:patterns #{#"^http://xkcd\.com/.*$"}}
-   :aws           {:patterns #{#"^https://.*?\.amazonaws\.com/.*$"}}
+   :aws           {:patterns #{#"^https://.+?\.amazonaws\.com/.*$"}}
   }
 ```
 
