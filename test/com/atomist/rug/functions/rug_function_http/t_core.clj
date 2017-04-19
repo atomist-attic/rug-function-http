@@ -9,5 +9,5 @@
   (http/run "get" "http://google.com" "{}") => (throws))
 
 (fact "no exeptions are thrown for a whitelisted url"
-  (http/run "get" "http://xkcd.com" "{}") => (fn [res] (= 200 (:status res))))
+  (http/run "get" "http://xkcd.com/" "{}") => (fn [res] (= 200 (:status res))))
 

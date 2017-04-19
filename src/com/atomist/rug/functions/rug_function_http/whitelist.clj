@@ -6,12 +6,13 @@
 
 (def whitelist
   {
-   :github         {:patterns #{#"^https://api\.github\.com.*$"}}
-   :google         {:patterns #{#"^https://www\.googleapis\.com.*$"}}
-   :stack-overflow {:patterns #{#"^http://api\.stackexchange\.com.*$"}}
-   :yahoo          {:patterns #{#"^http://query\.yahooapis\.com.*$"}}
-   :lebowski       {:patterns #{#"^http://lebowski\.me.*$"}}
-   :xkcd           {:patterns #{#"^http://xkcd\.com.*$"}}})
+   :github         {:patterns #{#"^https://api\.github\.com/.*$"}}
+   :google         {:patterns #{#"^https://www\.googleapis\.com/.*$"}}
+   :stack-overflow {:patterns #{#"^http://api\.stackexchange\.com/.*$"}}
+   :yahoo          {:patterns #{#"^http://query\.yahooapis\.com/.*$"}}
+   :lebowski       {:patterns #{#"^http://lebowski\.me/.*$"}}
+   :xkcd           {:patterns #{#"^http://xkcd\.com/.*$"}}
+   :aws           {:patterns #{#"^https://.*?\.amazonaws\.com/.*$"}}})
 
 (defn allowed-patterns
   "Return a list of all patterns"
