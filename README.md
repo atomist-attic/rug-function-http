@@ -1,6 +1,7 @@
-# rug-function-http
+# Atomist 'rug-function-http'
 
 [![Build Status](https://travis-ci.org/atomist/rug-function-http.svg?branch=master)](https://travis-ci.org/atomist/rug-function-http)
+[![Slack Status](https://join.atomist.com/badge.svg)](https://join.atomist.com)
 
 HTTP Rug Function based on https://github.com/dakrone/clj-http
 
@@ -27,9 +28,43 @@ Currently we employ strict URL whitelisting to _all_ requests. Below is the curr
   }
 ```
 
-```shell
-lein build
+## Support
+
+General support questions should be discussed in the `#support`
+channel on our community Slack team
+at [atomist-community.slack.com][slack].
+
+If you find a problem, please create an [issue][].
+
+[issue]: https://github.com/atomist/rug-function-http/issues
+
+## Building
+
+```
+$ lein build
 ```
 
+## Releasing
+
+To create a new release of the project, simply push a tag of the form
+`M.N.P` where `M`, `N`, and `P` are integers that form the next
+appropriate [semantic version][semver] for release.  For example:
+
+[semver]: http://semver.org
+
+```
+$ git tag -a 1.2.3
+```
+
+The Travis CI build (see badge at the top of this page) will
+automatically create a GitHub release using the tag name for the
+release and the comment provided on the annotated tag as the contents
+of the release notes.  It will also automatically upload the needed
+artifacts.
+
 ---
-Created by Atomist. Need Help? <a href="https://join.atomist.com/">Join our Slack team</a>
+Created by [Atomist][atomist].
+Need Help?  [Join our Slack team][slack].
+
+[atomist]: https://www.atomist.com/
+[slack]: https://join.atomist.com/
