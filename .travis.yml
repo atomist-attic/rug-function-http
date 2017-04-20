@@ -1,6 +1,6 @@
 language: clojure
 install: true
-script: ./travis-build.sh
+script: bash travis-build.bash
 jdk:
 - oraclejdk8
 notifications:

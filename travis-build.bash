@@ -4,7 +4,7 @@
 set -o pipefail
 
 declare Pkg=travis-build-boot
-declare Version=0.1.0
+declare Version=0.2.0
 
 function msg() {
     echo "$Pkg: $*"
@@ -14,12 +14,12 @@ function err() {
     msg "$*" 1>&2
 }
 
-function install(){
+function install-boot() {
     if ! wget https://github.com/boot-clj/boot-bin/releases/download/latest/boot.sh -O boot; then
         err "unable to download boot install script"
         return 1
     fi
-    if ! chmod 766 ./boot; then
+    if ! chmod 755 ./boot; then
         err "unable to chmod boot"
         return 1
     fi
@@ -31,6 +31,10 @@ function install(){
 
 function main() {
     msg "branch is ${TRAVIS_BRANCH}"
+
+    if ! install-boot; then
+        return 1
+    fi
 
     local project_version
     if [[ $TRAVIS_TAG =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
@@ -44,7 +48,10 @@ function main() {
     fi
     msg "Project version: $project_version"
 
-    ./boot midje
+    if ! ./boot midje; then
+        err "boot midje failed"
+        return 1
+    fi
 
     if [[ $TRAVIS_PULL_REQUEST != false ]]; then
         msg "not publishing or tagging pull request"
@@ -55,7 +62,7 @@ function main() {
         msg "version is $project_version"
 
         if ! gpg --allow-secret-key-import --import atomist_sec.gpg; then
-           err "Error importing gpg keys"
+           err "error importing gpg keys"
            return 1
         fi
 
@@ -89,6 +96,5 @@ function main() {
     fi
 }
 
-install "$@" || exit 1
 main "$@" || exit 1
 exit 0
