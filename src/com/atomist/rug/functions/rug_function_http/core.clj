@@ -57,7 +57,7 @@
     val
     (first default)))
 
-(def valid-methods #{"get" "put" "post" "head" "delete"})
+(def valid-methods #{"get" "put" "post" "head" "delete", "patch"})
 
 (defn validate-method
   "Is the method allowed?. Throw exceptions if not"
@@ -113,7 +113,7 @@
        (.describedAs "The HTTP URL to call"))
      (->
        (Parameter. "method")
-       (.setPattern "^get|put|post|head|delete$")
+       (.setPattern "^get|put|post|head|delete$|patch")
        (.describedAs "The HTTP method to use. One of get|put|post|head|delete"))
 
      (->
