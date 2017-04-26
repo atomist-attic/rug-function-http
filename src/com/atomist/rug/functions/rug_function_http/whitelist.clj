@@ -8,6 +8,7 @@
   {
    :github         {:patterns #{#"^https://api\.github\.com/.*$"}}
    :google         {:patterns #{#"^https://www\.googleapis\.com/.*$"}}
+   :heroku         {:patterns #{#"^https://api\.heroku\.com/.*$"}}
    :stack-overflow {:patterns #{#"^http://api\.stackexchange\.com/.*$"}}
    :yahoo          {:patterns #{#"^http://query\.yahooapis\.com/.*$"}}
    :lebowski       {:patterns #{#"^http://lebowski\.me/.*$"}}
