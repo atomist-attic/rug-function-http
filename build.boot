@@ -24,7 +24,8 @@
   pom {:project 'com.atomist.rug/rug-function-http
        :version (get-env :version)
        :description "HTTP Rug Function"}
-  aot {:namespace #{'com.atomist.rug.functions.rug-function-http.core}}
+  aot {:namespace #{'com.atomist.rug.functions.rug-function-http.core
+                    com.atomist.rug.functions.rug-function-http.whitelist}}
   push {:repo (get-env :repo)
         :gpg-sign true
         :ensure-release false
