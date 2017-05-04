@@ -13,9 +13,9 @@
    :yahoo          {:patterns #{#"^http://query\.yahooapis\.com/.*$"}}
    :lebowski       {:patterns #{#"^http://lebowski\.me/.*$"}}
    :xkcd           {:patterns #{#"^http://xkcd\.com/.*$"}}
-   :npm           {:patterns #{#"^https://registry\.npmjs\.org/.*$"}}
-   :jfrog           {:patterns #{#"^https://.+?\.jfrog\.io/.*$"}}
-   :aws           {:patterns #{#"^https://.+?\.amazonaws\.com/.*$"}}})
+   :npm            {:patterns #{#"^https://registry\.npmjs\.org/.*$"}}
+   :jfrog          {:patterns #{#"^https://.+?\.jfrog\.io/.*$"}}
+   :aws            {:patterns #{#"^https://.+?\.amazonaws\.com/.*$"}}})
 
 (defn allowed-patterns
   "Return a list of all patterns"
