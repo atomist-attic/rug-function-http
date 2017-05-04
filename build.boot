@@ -13,7 +13,7 @@
                  ["timestamp" {:url      "https://atomist.jfrog.io/atomist/libs-dev-local"
                               :username (System/getenv "ATOMIST_REPO_USER")
                               :password (System/getenv "ATOMIST_REPO_PWD")}]]
-  :version "0.8.0-SNAPSHOT"
+  :version "0.7.3-SNAPSHOT"
   :repo "timestamp"
   :resource-paths #{"src" "resources"}
   :source-paths #{"src"})
