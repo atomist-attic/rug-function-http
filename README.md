@@ -41,7 +41,7 @@ If you find a problem, please create an [issue][].
 ## Building
 
 ```
-$ lein build
+$ boot build
 ```
 
 ## Releasing
