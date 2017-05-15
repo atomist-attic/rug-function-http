@@ -15,7 +15,8 @@
    :xkcd           {:patterns #{#"^http://xkcd\.com/.*$"}}
    :npm            {:patterns #{#"^https://registry\.npmjs\.org/.*$"}}
    :jfrog          {:patterns #{#"^https://.+?\.jfrog\.io/.*$"}}
-   :aws            {:patterns #{#"^https://.+?\.amazonaws\.com/.*$"}}})
+   :aws            {:patterns #{#"^https://.+?\.amazonaws\.com/.*$"}}
+   :slack          {:patterns #{#"^https://slack\.com/api/.*$"}}})
 
 (defn allowed-patterns
   "Return a list of all patterns"
