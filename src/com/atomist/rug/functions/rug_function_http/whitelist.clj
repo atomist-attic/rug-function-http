@@ -1,5 +1,6 @@
 (ns com.atomist.rug.functions.rug-function-http.whitelist
-  (:require [clojure.edn :as edn]))
+  (:require [clojure.edn :as edn]
+            [clojure.core.memoize :as mem]))
 
 ;
 ; Simple domain whitelisting for now
@@ -22,12 +23,15 @@
 
 
 
-(defn whitelist
+(defn whitelist!
   "Calculate the combined whitelist"
   []
   (if-let [additional (System/getProperty "http.whitelist.file")]
     (merge static-whitelist (edn/read-string (slurp additional)))
     static-whitelist))
+
+(def whitelist
+  (mem/ttl whitelist!))
 
 (defn allowed-patterns
   "Return a list of all patterns"
