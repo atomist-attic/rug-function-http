@@ -1,4 +1,6 @@
 .idea/
+.nrepl-history
+project.clj
 .lein-failures
 .nrepl-port
 *.iml

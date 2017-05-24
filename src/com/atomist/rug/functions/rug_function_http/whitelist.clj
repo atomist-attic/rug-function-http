@@ -1,29 +1,39 @@
-(ns com.atomist.rug.functions.rug-function-http.whitelist)
+(ns com.atomist.rug.functions.rug-function-http.whitelist
+  (:require [clojure.edn :as edn]))
 
 ;
 ; Simple domain whitelisting for now
 ;
 
-(def whitelist
+(def static-whitelist
   {
-   :github           {:patterns #{#"^https://api\.github\.com/.*$"}}
-   :google           {:patterns #{#"^https://www\.googleapis\.com/.*$"}}
-   :heroku           {:patterns #{#"^https://api\.heroku\.com/.*$"}}
-   :stack-overflow   {:patterns #{#"^http://api\.stackexchange\.com/.*$"}}
-   :yahoo            {:patterns #{#"^http://query\.yahooapis\.com/.*$"}}
-   :lebowski         {:patterns #{#"^http://lebowski\.me/.*$"}}
-   :xkcd             {:patterns #{#"^http://xkcd\.com/.*$"}}
-   :npm              {:patterns #{#"^https://registry\.npmjs\.org/.*$"}}
-   :jfrog            {:patterns #{#"^https://.+?\.jfrog\.io/.*$"}}
-   :aws              {:patterns #{#"^https://.+?\.amazonaws\.com/.*$"}}
-   :slack            {:patterns #{#"^https://slack\.com/api/.*$"}}
-   :atomist-webhooks {:patterns #{#"^https://webhook\.atomist\.com/.*$"}}})
+   :github           {:patterns #{"^https://api\\.github\\.com/.*$"}}
+   :google           {:patterns #{"^https://www\\.googleapis\\.com/.*$"}}
+   :heroku           {:patterns #{"^https://api\\.heroku\\.com/.*$"}}
+   :stack-overflow   {:patterns #{"^http://api\\.stackexchange\\.com/.*$"}}
+   :yahoo            {:patterns #{"^http://query\\.yahooapis\\.com/.*$"}}
+   :lebowski         {:patterns #{"^http://lebowski\\.me/.*$"}}
+   :xkcd             {:patterns #{"^http://xkcd\\.com/.*$"}}
+   :npm              {:patterns #{"^https://registry\\.npmjs\\.org/.*$"}}
+   :jfrog            {:patterns #{"^https://.+?\\.jfrog\\.io/.*$"}}
+   :aws              {:patterns #{"^https://.+?\\.amazonaws\\.com/.*$"}}
+   :slack            {:patterns #{"^https://slack\\.com/api/.*$"}}
+   :atomist-webhooks {:patterns #{"^https://webhook\\.atomist\\.com/.*$"}}})
+
+
+
+(defn whitelist
+  "Calculate the combined whitelist"
+  []
+  (if-let [additional (System/getProperty "http.whitelist.file")]
+    (merge static-whitelist (edn/read-string (slurp additional)))
+    static-whitelist))
 
 (defn allowed-patterns
   "Return a list of all patterns"
   []
   (->>
-    whitelist
+    (whitelist)
     vals
     (map :patterns)
     (reduce concat)))
@@ -34,6 +44,6 @@
   (if (string? url)
     (->>
       (allowed-patterns)
-      (some #(re-matches % url))
+      (some #(re-matches (re-pattern %) url))
       boolean)
     false))

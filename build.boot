@@ -4,7 +4,9 @@
                   [com.atomist/rug "0.25.3" :scope "provided"]
                   [org.clojure/data.json "0.2.6" :exclusions [org.clojure/clojure ]]
                   [clj-http "3.4.1" :exclusions [org.clojure/clojure ]]
+                  [org.clojure/core.memoize "0.5.8"]
                   [zilti/boot-midje "0.2.2-SNAPSHOT" :scope "test"]
+                  [onetom/boot-lein-generate "0.1.3" :scope "test"]
                   [midje "1.8.3" :scope "test"]]
   :repositories [["public-atomist-release" {:url      "https://atomist.jfrog.io/atomist/libs-release"}]
                  ["release" {:url      "https://atomist.jfrog.io/atomist/libs-release-local"
@@ -18,7 +20,11 @@
   :resource-paths #{"src" "resources"}
   :source-paths #{"src"})
 
-(require '[zilti.boot-midje :refer [midje]])
+(require
+  '[zilti.boot-midje :refer [midje]]
+  '[boot.lein])
+
+(boot.lein/generate)
 
 (task-options!
   pom {:project 'com.atomist.rug/rug-function-http
