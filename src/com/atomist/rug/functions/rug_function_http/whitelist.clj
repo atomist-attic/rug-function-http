@@ -14,6 +14,8 @@
    :stack-overflow   {:patterns #{"^http://api\\.stackexchange\\.com/.*$"}}
    :yahoo            {:patterns #{"^http://query\\.yahooapis\\.com/.*$"}}
    :lebowski         {:patterns #{"^http://lebowski\\.me/.*$"}}
+   :travis-com       {:patterns #{"^https://api\\.travis-ci\\.com/.*$"}}
+   :travis-org       {:patterns #{"^https://api\\.travis-ci\\.org/.*$"}}
    :xkcd             {:patterns #{"^http://xkcd\\.com/.*$"}}
    :npm              {:patterns #{"^https://registry\\.npmjs\\.org/.*$"}}
    :jfrog            {:patterns #{"^https://.+?\\.jfrog\\.io/.*$"}}
