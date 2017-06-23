@@ -18,8 +18,8 @@
    :travis-org       {:patterns #{"^https://api\\.travis-ci\\.org/.*$"}}
    :xkcd             {:patterns #{"^http://xkcd\\.com/.*$"}}
    :npm              {:patterns #{"^https://registry\\.npmjs\\.org/.*$"}}
-   :jfrog            {:patterns #{"^https://.+?\\.jfrog\\.io/.*$"}}
-   :aws              {:patterns #{"^https://.+?\\.amazonaws\\.com/.*$"}}
+   :jfrog            {:patterns #{"^https://[^/]+?\\.jfrog\\.io/.*$"}}
+   :aws              {:patterns #{"^https://[^/]+?\\.amazonaws\\.com/.*$"}}
    :slack            {:patterns #{"^https://slack\\.com/api/.*$"}}
    :atomist-webhooks {:patterns #{"^https://webhook\\.atomist\\.com/.*$"}}})
 
