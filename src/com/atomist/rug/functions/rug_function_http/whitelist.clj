@@ -20,6 +20,7 @@
    :npm              {:patterns #{"^https://registry\\.npmjs\\.org/.*$"}}
    :jfrog            {:patterns #{"^https://[^/]+?\\.jfrog\\.io/.*$"}}
    :aws              {:patterns #{"^https://[^/]+?\\.amazonaws\\.com/.*$"}}
+   :pivotalws        {:patterns #{"^http://api\\.run\\.pivotal\\.io/.*$"}}
    :slack            {:patterns #{"^https://slack\\.com/api/.*$"}}
    :atomist-webhooks {:patterns #{"^https://webhook\\.atomist\\.com/.*$"}}})
 
