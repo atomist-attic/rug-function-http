@@ -46,10 +46,8 @@
 
 (defn allowed?
   "Return true if and only if the url matches a pattern"
-  [^String url]
-  (if (string? url)
-    (->>
-      (allowed-patterns)
-      (some #(re-matches (re-pattern %) url))
-      boolean)
-    false))
+  [url]
+  (->>
+    (allowed-patterns)
+    (some #(re-matches (re-pattern %) (.toString url)))
+    boolean))

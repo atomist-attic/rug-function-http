@@ -71,7 +71,7 @@
   "Clean version of -run"
   [method url config]
   (when-not (whitelist/allowed? url)
-    (throw (RuntimeException. (str url " is not in the whitelist -> \n\t" (str/join ",\n\t" (whitelist/allowed-patterns))))))
+    (throw (RuntimeException. (str "'" url "' is not in the whitelist -> \n\t" (str/join ",\n\t" (whitelist/allowed-patterns))))))
   (apply
     (resolve (symbol (str "clj-http.client/" (validate-method method))))
     [url
